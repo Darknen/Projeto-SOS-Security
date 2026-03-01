@@ -1,436 +1,578 @@
-/* =========================
-   RESET
-========================= */
+/* =====================================================
+   SOS SECURITY - ESTILO PRINCIPAL
+   Organização:
+   1) Reset / Base
+   2) Layout global
+   3) Header e menu
+   4) Botões
+   5) Hero
+   6) Seções (Serviços/Promoções/Assistência/Sobre)
+   7) Formulário
+   8) Footer e WhatsApp flutuante
+   9) Responsividade
+===================================================== */
 
+/* =========================
+   RESET / BASE
+========================= */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root{
+  --green: #25D366;
+  --dark: #0a1929;
+  --text: #1e2b3c;
+  --soft: #f4f7fb;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #1e2b3c;
-    background: #ffffff;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  background: #ffffff;
 }
+
+/* Evita o título da seção ficar escondido atrás do header fixo */
+section { scroll-margin-top: 110px; }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Classe utilitária (iframe escondido) */
+.sr-only{
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  border: 0;
 }
 
 /* =========================
-   TOP BAR - CLARA DEFINITIVA
+   HEADER FIXO
+   - Desktop: menu horizontal + CTA WhatsApp
+   - Mobile: botão ☰ e menu dropdown
 ========================= */
-
-.top-bar {
-    background: #e9f2fb !important;
-    color: #1e2b3c !important;
-    font-size: 14px;
-    padding: 10px 0;
-}
-
-.top-bar span {
-    font-weight: 500;
-}
-
-
-/* =========================
-   HEADER FIXO INTEGRADO AO HERO
-========================= */
-
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 0;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    z-index: 1000;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  padding: 20px 0;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  z-index: 1000;
+  transition: 0.25s ease;
+}
+
+header.active{
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
 }
 
 .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  position: relative; /* para dropdown no mobile */
 }
 
 .logo img {
-    height: 55px;
-    width: auto;
-    display: block;
+  height: 55px;
+  width: auto;
+  display: block;
 }
 
 /* =========================
-   MENU BOTÃO COM ZOOM
+   MENU DESKTOP
 ========================= */
-
-nav {
-    display: flex;
-    gap: 12px;
+.main-nav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
-nav a {
-    background: rgba(255,255,255,0.08);
-    padding: 8px 16px;
-    border-radius: 30px;
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-    font-size: 14px;
-    transition: all 0.3s ease;
+.main-nav a {
+  background: rgba(255,255,255,0.08);
+  padding: 8px 16px;
+  border-radius: 30px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
-nav a:hover {
-    background: #25D366;
-    transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(37,211,102,0.4);
+.main-nav a:hover {
+  background: var(--green);
+  transform: scale(1.06);
+  box-shadow: 0 8px 20px rgba(37,211,102,0.35);
 }
+
+/* Botão menu mobile (só aparece em telas pequenas) */
+.menu-toggle {
+  display: none;
+  border: 0;
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* WhatsApp CTA: desktop / mobile */
+.btn-whatsapp-desktop { display: inline-flex; }
+/*.nav-whatsapp { display: none; }/* /* aparece no mobile dentro do dropdown */
 
 /* =========================
    BOTÕES
 ========================= */
-
 .btn-primary {
-    background: #25D366;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
+  background: var(--green);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn-primary:hover {
-    background: #1ebe5d;
+  background: #1ebe5d;
 }
 
 .btn-secondary {
-    background: transparent;
-    border: 2px solid #25D366;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
+  background: transparent;
+  border: 2px solid var(--green);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn-secondary:hover {
-    background: #25D366;
+  background: var(--green);
 }
 
 /* =========================
-   HERO COM IMAGEM DE FUNDO
+   HERO
+   - Desktop mantém impacto
+   - Mobile ajusta tamanho e empilha botões
 ========================= */
-
 .hero {
-    margin-top: 90px; /* mesma altura do header */
-    
-    background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url("images/hero-bg.png");
+  margin-top: 90px; /* mesma altura do header */
+  background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url("images/hero-bg.png");
+  background-size: cover;
+  background-position: center 10%;
+  background-repeat: no-repeat;
 
-    background-size:cover;
-    background-position: center 10%;
-    background-repeat: no-repeat;
+  min-height: calc(100vh - 90px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    min-height: calc(100vh - 90px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: white;
-    text-align: center;
+  color: white;
+  text-align: center;
 }
 
-./* =========================
-   HERO TEXTO MODERNO
-========================= */
+.hero-content{
+  padding: 40px 0;
+}
 
 .hero h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 48px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-    color: #25D366;
-
-    animation: glowText 2s ease-in-out infinite alternate;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  color: var(--green);
+  animation: glowText 2s ease-in-out infinite alternate;
 }
 
-   
+@keyframes glowText {
+  0% { text-shadow: 0 0 10px rgba(37,211,102,0.25); }
+  100% { text-shadow: 0 0 20px rgba(37,211,102,0.55); }
+}
+
+.hero h2 span{
+  color: #fff;
+}
 
 .hero p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    max-width: 750px;
-    margin: auto;
-    line-height: 1.8;
-    margin-bottom: 40px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  max-width: 750px;
+  margin: 0 auto 40px auto;
+  line-height: 1.8;
+  opacity: 0.95;
 }
 
 .hero-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 /* =========================
    SERVIÇOS
 ========================= */
-
 .services {
-    padding: 100px 20px;
-    text-align: center;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.services h2{
+  font-family: 'Poppins', sans-serif;
 }
 
 .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
-    margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-top: 50px;
 }
 
 .card {
-    background: #f4f7fb;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    transition: 0.3s;
+  background: var(--soft);
+  padding: 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: 0.3s;
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
 }
 
 /* =========================
    PROMOÇÕES
 ========================= */
-
 .promocoes {
-    background: #f4f7fb;
-    padding: 120px 20px;
-    text-align: center;
+  background: var(--soft);
+  padding: 120px 20px;
+  text-align: center;
 }
 
 .promo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 60px;
 }
 
 .promo-card {
-    background: white;
-    padding: 40px 25px;
-    border-radius: 20px;
-    border: 3px solid #25D366;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    transition: 0.3s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  background: white;
+  padding: 40px 25px;
+  border-radius: 20px;
+  border: 3px solid var(--green);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
 }
 
 .promo-card:hover {
-    transform: translateY(-8px);
+  transform: translateY(-8px);
 }
 
 .preco {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #1e3a5f;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #1e3a5f;
 }
 
 .preco strong {
-    font-size: 28px;
-    color: #0a1929;
+  font-size: 28px;
+  color: #0a1929;
 }
 
 /* =========================
-   ASSISTÊNCIA PREMIUM
+   ASSISTÊNCIA
 ========================= */
-
 .assistencia {
-    background: linear-gradient(135deg, #eef2f7, #f9fbfd);
-    padding: 120px 20px;
-    text-align: center;
+  background: linear-gradient(135deg, #eef2f7, #f9fbfd);
+  padding: 120px 20px;
+  text-align: center;
+}
+
+.assistencia-descricao{
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+  font-size: 18px;
+  color: #2a3a50;
 }
 
 .assistencia-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
 }
 
 .assist-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    padding: 35px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.8);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    transition: 0.4s;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 35px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: 0.4s;
 }
 
 .assist-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.assistencia-cta {
+  margin-top: 80px;
 }
 
 /* =========================
    SOBRE
 ========================= */
-
 .about {
-    padding: 120px 20px;
-    text-align: center;
+  padding: 120px 20px;
+  text-align: center;
 }
 
-/* =========================
-   ABOUT - 4 CARDS NA MESMA LINHA
-========================= */
+.about-descricao{
+  max-width: 950px;
+  margin: 0 auto 30px auto;
+  font-size: 18px;
+  color: #2a3a50;
+}
 
+/* 4 cards na mesma linha no desktop */
 .about-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-top: 50px;
 }
 
 .about-card {
-    background: #f4f7fb;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    transition: 0.3s;
+  background: var(--soft);
+  padding: 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: 0.3s;
 }
 
 .about-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
 }
 
 /* =========================
-   FOOTER
+   CONTATO / FORM
 ========================= */
-
-footer {
-    background: #0a1929;
-    color: white;
-    padding: 80px 20px 30px 20px;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-col p {
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #ccc;
-}
-
-.footer-bottom {
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 20px;
-    font-size: 14px;
-    color: #aaa;
-}
-
-/* =========================
-   WHATSAPP FLUTUANTE
-========================= */
-
-.floating-whatsapp {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25D366;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    text-decoration: none;
-    color: white;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-.assistencia-cta {
-    margin-top: 100px;
-}
-
-/* =========================
-   FORMULÁRIO DE CONTATO
-========================= */
-
 .contato {
-    padding: 120px 20px;
-    background: #f4f7fb;
-    text-align: center;
+  padding: 120px 20px;
+  background: var(--soft);
+  text-align: center;
 }
 
 .contato h2 {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .contato-descricao {
-    max-width: 700px;
-    margin: 0 auto 50px auto;
-    font-size: 18px;
-    color: #444;
+  max-width: 700px;
+  margin: 0 auto 50px auto;
+  font-size: 18px;
+  color: #444;
 }
 
 .form-contato {
-    max-width: 600px;
-    margin: auto;
+  max-width: 600px;
+  margin: auto;
 }
 
 .form-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form-contato input,
 .form-contato select,
 .form-contato textarea {
-    width: 100%;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    font-family: inherit;
-    transition: 0.3s;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  font-family: inherit;
+  transition: 0.3s;
+  background: #fff;
 }
 
 .form-contato input:focus,
 .form-contato select:focus,
 .form-contato textarea:focus {
-    outline: none;
-    border-color: #25D366;
-    box-shadow: 0 0 8px rgba(37,211,102,0.3);
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 8px rgba(37,211,102,0.3);
 }
 
 .form-contato button {
-    width: 100%;
-    padding: 14px;
-    font-size: 18px;
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
 }
 
 .form-aviso{
   margin-top: 12px;
   font-size: 14px;
   color: #555;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  background: var(--dark);
+  color: white;
+  padding: 80px 20px 30px 20px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-col p {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* =========================
+   WHATSAPP FLUTUANTE
+========================= */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--green);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  text-decoration: none;
+  color: white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* =====================================================
+   RESPONSIVIDADE
+   Breakpoints:
+   900px (tablet) / 700px (mobile)
+===================================================== */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .hero h2 { font-size: 36px; }
+  .hero p { font-size: 18px; }
+
+  /* About: 2 colunas no tablet */
+  .about-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .assistencia-cta { margin-top: 50px; }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  header { padding: 14px 0; }
+  .logo img { height: 46px; }
+
+  /* Esconde CTA do desktop e mostra dentro do nav */
+  .btn-whatsapp-desktop { display: none; }
+  /*.nav-whatsapp { display: inline-flex; width: 100%; }*/
+
+  /* Mostra botão do menu */
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Nav vira dropdown */
+  .main-nav{
+    position: absolute;
+    top: 76px;
+    left: 0;
+    width: 100%;
+    padding: 12px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(15, 32, 39, 0.98);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
+
+  .main-nav.open { display: flex; }
+
+  .main-nav a {
+    width: 100%;
+    text-align: center;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 15px;
+  }
+
+  /* Hero: empilha botões */
+  .hero-buttons { flex-direction: column; }
+  .hero-buttons a { width: 100%; max-width: 360px; }
+
+  /* About: 1 coluna */
+  .about-grid { grid-template-columns: 1fr; }
+
+  /* Seções: menos padding no mobile */
+  .services, .promocoes, .assistencia, .about, .contato {
+    padding: 80px 16px;
+  }
+
+  /* Texto de descrição mais confortável */
+  .assistencia-descricao, .about-descricao, .contato-descricao{
+    font-size: 16px;
+  }
 }
