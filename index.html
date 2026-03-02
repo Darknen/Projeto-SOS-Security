@@ -5,30 +5,85 @@
        SOS SECURITY - SITE INSTITUCIONAL
        Estrutura:
        Header | Hero | Serviços | Promoções | Assistência
-       Sobre | Contato | Footer
+       Sobre | Contato | Footer | Modal Orçamento | Botão Flutuante
   ====================================================== -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>SOS Security | Segurança Eletrônica</title>
+  <title>SOS Security | Segurança Eletrônica no Rio de Janeiro - CFTV, Alarmes e Controle de Acesso</title>
   <meta name="description" content="Soluções completas em segurança eletrônica para residências, condomínios e empresas no Rio de Janeiro." />
 
-  <!-- Fontes (para Orbitron e Poppins do seu CSS) -->
+  <!-- Open Graph (OG): metatags usadas por WhatsApp/Facebook/Instagram para criar o “card” do link -->
+
+  <!-- Título que aparece no card quando seu link é compartilhado -->
+  <meta property="og:title" content="SOS Security - Segurança Eletrônica no RJ">
+
+  <!-- Descrição curta (resumo) que aparece abaixo do título no card -->
+  <meta property="og:description" content="Instalação e manutenção de CFTV, alarmes e controle de acesso no Rio de Janeiro.">
+
+  <!-- Imagem de destaque do card (precisa ser uma URL pública e acessível) -->
+  <meta property="og:image" content="https://sossecurity.com.br/images/hero-bg.png">
+
+  <!-- Tipo de conteúdo: para site institucional/landing page normalmente é 'website' -->
+  <meta property="og:type" content="website">
+
+  <!-- Fontes (Orbitron + Poppins) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- outros metas / css / etc -->
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "SOS Security",
+      "image": "https://sossecurity.com.br/images/logo.png",
+      "telephone": "+55 21 97695-2138",
+      "email": "sos_security@hotmail.com.br",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua Adelaide Badajos 55",
+        "addressLocality": "Rio de Janeiro",
+        "addressRegion": "RJ",
+        "postalCode": "21351-290",
+        "addressCountry": "BR"
+      },
+      "areaServed": "Rio de Janeiro",
+      "url": "https://sossecurity.com.br"
+    }
+    </script>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+
+  <!-- =====================================================
+     BANNER LGPD (Cookies)
+     - Exibe uma vez e salva a escolha do usuário
+===================================================== -->
+<div class="lgpd-banner" id="lgpdBanner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+  <div class="lgpd-banner__content">
+    <p class="lgpd-banner__text">
+      Usamos cookies para melhorar sua experiência, analisar o tráfego e personalizar conteúdo.
+      Você pode aceitar ou recusar. Veja nossa
+      <a href="/" class="lgpd-banner__link">Política de Privacidade</a>.
+    </p>
+
+    <div class="lgpd-banner__actions">
+      <button type="button" class="btn-primary lgpd-btn" id="lgpdReject">Recusar</button>
+      <button type="button" class="btn-primary lgpd-btn" id="lgpdAccept">Aceitar</button>
+    </div>
+  </div>
+</div>
 
   <!-- =========================
        HEADER FIXO
        - Logo
        - Menu (desktop)
        - Menu hambúrguer (mobile)
-       - CTA WhatsApp
+       - CTA WhatsApp (desktop)
   ========================= -->
   <header>
     <div class="container header-content">
@@ -43,19 +98,17 @@
         ☰
       </button>
 
-      <!-- Navegação principal -->
+      <!-- Navegação principal (CORRIGIDO: removido </a> sobrando) -->
       <nav id="mainNav" class="main-nav" aria-label="Menu principal">
         <a href="#services">Serviços</a>
         <a href="#promocoes">Promoções</a>
         <a href="#assistencia">Assistência</a>
         <a href="#about">Sobre</a>
         <a href="#contato">Contato</a>
-
-        </a>
       </nav>
 
       <!-- CTA WhatsApp (desktop) -->
-      <a href="https://wa.me/5521976952138" target="_blank" class="btn-primary btn-whatsapp-desktop">
+      <a href="https://wa.me/5521976952138" target="_blank" rel="noopener" class="btn-primary btn-whatsapp-desktop">
         📲 WhatsApp
       </a>
 
@@ -64,13 +117,15 @@
 
   <!-- =========================
        HERO
-       - Impacto + CTAs
-  ========================= -->
+       - Botões:
+         1) Ver Promoções (âncora normal)
+         2) Solicitar Orçamento (ABRE MODAL)
+              ========================= -->
   <section class="hero" id="topo">
     <div class="container hero-content">
-      <h2>
+      <h1>
         SOLUÇÕES COMPLETAS EM <span>SEGURANÇA ELETRÔNICA</span>
-      </h2>
+      </h1>
 
       <p>
         Proteja sua residência, condomínio ou empresa com tecnologia,
@@ -79,13 +134,13 @@
       </p>
 
       <div class="hero-buttons">
+        <!-- Botão de promoções (mantido) -->
         <a href="#promocoes" class="btn-secondary">
           🔥 Ver Promoções
         </a>
 
-        <a href="https://wa.me/5521976952138?text=Olá! Quero um orçamento."
-           target="_blank"
-           class="btn-secondary">
+        <!-- ✅ MODIFICAÇÃO: agora abre o MODAL -->
+        <a href="#" id="abrirOrcamento" class="btn-secondary abrirOrcamento">
           💬 Solicitar Orçamento
         </a>
       </div>
@@ -149,27 +204,38 @@
   <section class="promocoes" id="promocoes">
     <div class="container">
       <h2>🔥 Promoções de Manutenção Preventiva</h2>
+      
+   <!-- CONTADOR REGRESSIVO (NOVO) -->
+  <div class="promo-countdown" aria-label="Contador de tempo da promoção">
+  <span class="promo-countdown__label">⏳ Promoção termina em:</span>
+  <div class="promo-countdown__grid" id="promoCountdown">
+    <div class="cd-box"><strong id="cdDays">00</strong><small>Dias</small></div>
+    <div class="cd-box"><strong id="cdHours">00</strong><small>Horas</small></div>
+    <div class="cd-box"><strong id="cdMinutes">00</strong><small>Min</small></div>
+    <div class="cd-box"><strong id="cdSeconds">00</strong><small>Seg</small></div>
+  </div>
+</div>
 
       <div class="promo-grid">
         <div class="promo-card">
           <h3>🏠 Plano Residencial</h3>
-          <div class="preco">A partir de <strong>R$ 85,00</strong></div>
+          <div class="preco">A partir de <strong>R$ 100,00</strong></div>
           <p>Ideal para casas e apartamentos. Inclui visita mensal preventiva e suporte técnico.</p>
-          <a href="https://wa.me/5521976952138" class="btn-primary" target="_blank">Contratar</a>
+          <a href="https://wa.me/5521976952138" class="btn-primary" target="_blank" rel="noopener">Contratar</a>
         </div>
 
         <div class="promo-card">
           <h3>🏢 Plano Condomínio</h3>
           <div class="preco">A partir de <strong>R$ 350,00</strong></div>
           <p>Manutenção completa de CFTV, interfones e portões com suporte prioritário.</p>
-          <a href="https://wa.me/5521976952138" class="btn-primary" target="_blank">Contratar</a>
+          <a href="https://wa.me/5521976952138" class="btn-primary" target="_blank" rel="noopener">Contratar</a>
         </div>
 
         <div class="promo-card">
           <h3>💼 Plano Empresarial</h3>
           <div class="preco">A partir de <strong>R$ 250,00</strong></div>
           <p>Check-up completo mensal do sistema e suporte rápido para evitar paralisações.</p>
-          <a href="https://wa.me/5521976952138" class="btn-primary" target="_blank">Contratar</a>
+          <a href="https://wa.me/5521976952138" class="btn-primary" target="_blank" rel="noopener">Contratar</a>
         </div>
       </div>
     </div>
@@ -225,6 +291,7 @@
       <div class="assistencia-cta">
         <a href="https://wa.me/5521976952138?text=Olá! Preciso de assistência técnica."
            target="_blank"
+           rel="noopener"
            class="btn-primary">
           💬 Solicitar Assistência Agora
         </a>
@@ -271,9 +338,7 @@
   </section>
 
   <!-- =========================
-       CONTATO (E-mail + WhatsApp)
-       - Envia via FormSubmit
-       - Abre WhatsApp com mensagem pronta
+       CONTATO (FormSubmit + WhatsApp)
   ========================= -->
   <section class="contato" id="contato">
     <div class="container">
@@ -282,7 +347,6 @@
         Envie sua mensagem. Vamos receber por e-mail e você será direcionado ao WhatsApp com a mensagem pronta.
       </p>
 
-      <!-- iframe oculto para enviar sem sair da página -->
       <iframe name="formTarget" class="sr-only" title="Envio de formulário"></iframe>
 
       <form
@@ -292,10 +356,14 @@
         method="POST"
         target="formTarget"
       >
-        <!-- Configurações FormSubmit -->
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_subject" value="Novo contato pelo site - SOS Security">
         <input type="hidden" name="_template" value="table">
+
+        <!-- ATENÇÃO: aqui no seu HTML original você usa id="nome/telefone/email"
+             (isso pode conflitar com IDs do modal se forem iguais).
+             O ideal é trocar para id="nomeContato" etc.
+             MAS: se seu script.js estiver "escopado" pelo form, não quebra. -->
 
         <div class="form-group">
           <input id="nome" type="text" name="Nome" placeholder="Seu Nome" required>
@@ -366,37 +434,38 @@
     </div>
   </footer>
 
-  <!-- WhatsApp flutuante Premium-->
-  <a href="#" class="floating-whatsapp premium" id="abrirOrcamento" aria-label="Abrir formulário de orçamento">
-  <span class="wa-ico">🟢</span>
-  <span class="wa-text">
-    <strong>Orçamento</strong>
-    <small>retorno em até 24h</small>
-  </span>
-</a>
+  <!-- =====================================================
+       ✅ BOTÃO FLUTUANTE (ABRE DIRETO O WHATSAPP)
+       - Mantém o mesmo design do botão "Ver Promoções" (btn-secondary)
+       - NÃO abre modal
+  ====================================================== -->
+  <a
+    href="https://wa.me/5521976952138?text=Olá! Gostaria de falar com a SOS Security."
+    target="_blank"
+    rel="noopener"
+    class="btn-secondary floating-cta"
+    aria-label="Falar no WhatsApp"
+  >
+    💬 Falar no WhatsApp
+  </a>
 
- <!-- =====================================================
-       MODAL — ORÇAMENTO TÉCNICO (LAYOUT EM CARDS, CLEAN)
-       - Tela única
-       - Dropdown em todos os campos com opções
-       - Sistemas: dropdown múltiplo (checkbox dentro)
-       - CFTV: quantidade de câmeras (opcional)
-       - Ao enviar: abre WhatsApp com a mensagem pronta
+  <!-- =====================================================
+       MODAL — ORÇAMENTO TÉCNICO
+       - Abre ao clicar em "Solicitar Orçamento" (id="abrirOrcamento")
+       - Envia para WhatsApp com mensagem pronta
+       OBS: Mantive seu modal como você vinha construindo antes.
   ====================================================== -->
   <div class="modal" id="modalOrcamento" aria-hidden="true">
     <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="orcTitle">
-
-      <!-- Botão fechar -->
       <button class="modal__close" id="fecharModal" type="button" aria-label="Fechar modal">✕</button>
 
-      <!-- Cabeçalho do modal (clean total) -->
       <div class="modal__header">
-        <h3 id="orcTitle">Solicite seu orçamento</h3>
-        <p>Preencha abaixo. Ao enviar, o WhatsApp abrirá com a mensagem pronta.</p>
+        <h3 id="orcTitle">Solicitar Orçamento Técnico</h3>
+        <p>Preencha os dados abaixo. Após enviar, o WhatsApp será aberto com a mensagem pronta.</p>
       </div>
 
       <form class="modal__form" id="formOrcamentoModal">
-        <!-- CARD 1: Dados do cliente -->
+        <!-- DADOS DO CLIENTE -->
         <section class="card">
           <div class="card__title">📌 Dados do cliente</div>
 
@@ -430,7 +499,7 @@
           </div>
         </section>
 
-        <!-- CARD 2: Tipo de imóvel -->
+        <!-- TIPO DE IMÓVEL -->
         <section class="card">
           <div class="card__title">🏢 Tipo de imóvel</div>
           <div class="field">
@@ -444,7 +513,7 @@
           </div>
         </section>
 
-        <!-- CARD 3: Endereço completo (obrigatório) -->
+        <!-- ENDEREÇO -->
         <section class="card">
           <div class="card__title">📍 Endereço do serviço</div>
 
@@ -492,20 +561,18 @@
           </div>
         </section>
 
-        <!-- CARD 4: Sistemas (dropdown múltiplo) -->
+        <!-- SISTEMAS (dropdown múltiplo) -->
         <section class="card">
-          <div class="card__title">🛠 Selecione seu Sistema</div>
+          <div class="card__title">🛠 Sistemas de interesse</div>
 
           <div class="field">
             <label>Sistemas * (pode marcar mais de um)</label>
 
-            <!-- Trigger com visual de dropdown -->
             <button type="button" class="multi-trigger" id="sistemasTrigger" aria-expanded="false">
               <span id="sistemasLabel">Selecione os sistemas</span>
               <span class="chev" aria-hidden="true">▾</span>
             </button>
 
-            <!-- Painel com checkboxes -->
             <div class="multi-panel" id="sistemasPanel">
               <label class="multi-option">
                 <input type="checkbox" class="sys-check" value="CFTV / Câmeras" data-key="cftv">
@@ -541,9 +608,7 @@
               </label>
             </div>
 
-            <!-- Hidden required para validação -->
             <input type="hidden" id="sistemasHidden" name="sistemasHidden" required>
-
             <small class="hint">Clique no campo acima para abrir e selecionar.</small>
           </div>
 
@@ -567,7 +632,7 @@
           </div>
         </section>
 
-        <!-- CARD 5: Atendimento -->
+        <!-- ATENDIMENTO -->
         <section class="card">
           <div class="card__title">⚙ Detalhes do atendimento</div>
 
@@ -596,9 +661,9 @@
           </div>
         </section>
 
-        <!-- CARD 6: Descrição -->
+        <!-- DESCRIÇÃO -->
         <section class="card">
-          <div class="card__title">📝 Descrição da solicitação</div>
+          <div class="card__title">📝 Descrição do problema</div>
 
           <div class="field">
             <label for="descricao">Explique o que está acontecendo *</label>
@@ -607,13 +672,14 @@
           </div>
         </section>
 
-        <!-- CTA final -->
-      <div class="modal__footer">
-        <!-- <small class="hint">Retorno do atendimento em até 24h.</small> -->
-        <button type="submit" class="btn-primary btn-block">
-         Enviar Orçamento →
-         </button>
-</div>
+        <!-- Rodapé: texto à esquerda e botão à direita -->
+        <div class="modal__footer">
+          <small class="hint">Retorno do atendimento em até 24h.</small>
+          <button type="submit" class="btn-primary btn-block">Enviar Orçamento →</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

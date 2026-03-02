@@ -428,3 +428,159 @@ ${descricao}`;
     closeModal();
   });
 }
+
+/* =====================================================
+   Detecta se o botão flutuante está sobre a hero ou footer
+   e altera a cor do texto automaticamente
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const floatingBtn = document.querySelector(".floating-cta");
+  const hero = document.querySelector(".hero");
+  const footer = document.querySelector("footer");
+
+  if (!floatingBtn || !hero || !footer) return;
+
+  function checkPosition() {
+
+    const btnRect = floatingBtn.getBoundingClientRect();
+    const btnMiddleY = btnRect.top + (btnRect.height / 2);
+
+    const heroRect = hero.getBoundingClientRect();
+    const footerRect = footer.getBoundingClientRect();
+
+    const overHero =
+      btnMiddleY >= heroRect.top &&
+      btnMiddleY <= heroRect.bottom;
+
+    const overFooter =
+      btnMiddleY >= footerRect.top &&
+      btnMiddleY <= footerRect.bottom;
+
+    if (overHero || overFooter) {
+      floatingBtn.style.color = "#fff";   // Preto
+    } else {
+      floatingBtn.style.color = "";       // Volta para padrão
+    }
+  }
+
+  window.addEventListener("scroll", checkPosition);
+  window.addEventListener("resize", checkPosition);
+
+  checkPosition(); // Executa ao carregar
+
+});
+// =====================================================
+// Detecta qual seção está atrás do botão flutuante
+// Hero e Footer = letra branca
+// Restante = letra preta
+// =====================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const btn = document.querySelector(".floating-cta");
+  if (!btn) return;
+
+  function updateFloatingColor() {
+
+    const rect = btn.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    // desativa temporariamente para detectar o elemento atrás
+    btn.style.pointerEvents = "none";
+
+    const elementBehind = document.elementFromPoint(x, y);
+
+    btn.style.pointerEvents = "";
+
+    const isHero = elementBehind?.closest(".hero");
+    const isFooter = elementBehind?.closest("footer");
+
+    if (isHero || isFooter) {
+      btn.classList.add("is-white");
+    } else {
+      btn.classList.remove("is-white");
+    }
+  }
+
+  window.addEventListener("scroll", updateFloatingColor, { passive: true });
+  window.addEventListener("resize", updateFloatingColor);
+
+  updateFloatingColor(); // executa ao carregar
+});
+
+// =====================================================
+// CONTADOR REGRESSIVO DAS PROMOÇÕES
+// (por padrão: termina em 7 dias a partir de hoje)
+// =====================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById("promoCountdown");
+  if (!el) return;
+
+  // Defina aqui o prazo da promoção:
+  // Opção A (recomendado): 7 dias a partir de hoje
+  const end = new Date();
+  end.setDate(end.getDate() + 30);
+
+  // Se preferir uma data fixa, use assim:
+  // const end = new Date("2026-03-15T23:59:59-03:00");
+
+  const d = document.getElementById("cdDays");
+  const h = document.getElementById("cdHours");
+  const m = document.getElementById("cdMinutes");
+  const s = document.getElementById("cdSeconds");
+
+  const pad2 = (n) => String(n).padStart(2, "0");
+
+  function tick(){
+    const now = new Date();
+    let diff = end.getTime() - now.getTime();
+
+    if (diff <= 0){
+      diff = 0;
+      el.classList.add("is-ended");
+    }
+
+    const totalSec = Math.floor(diff / 1000);
+    const days = Math.floor(totalSec / 86400);
+    const hours = Math.floor((totalSec % 86400) / 3600);
+    const mins = Math.floor((totalSec % 3600) / 60);
+    const secs = totalSec % 60;
+
+    if (d) d.textContent = pad2(days);
+    if (h) h.textContent = pad2(hours);
+    if (m) m.textContent = pad2(mins);
+    if (s) s.textContent = pad2(secs);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+});
+
+// =====================================================
+// BANNER LGPD (Cookies) - salva escolha do usuário
+// =====================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const banner = document.getElementById("lgpdBanner");
+  const accept = document.getElementById("lgpdAccept");
+  const reject = document.getElementById("lgpdReject");
+
+  if (!banner || !accept || !reject) return;
+
+  const KEY = "lgpd_consent"; // "accepted" | "rejected"
+
+  const saved = localStorage.getItem(KEY);
+  if (!saved) {
+    banner.classList.add("show");
+  }
+
+  function closeBanner(value) {
+    localStorage.setItem(KEY, value);
+    banner.classList.remove("show");
+  }
+
+  accept.addEventListener("click", () => closeBanner("accepted"));
+  reject.addEventListener("click", () => closeBanner("rejected"));
+});

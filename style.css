@@ -33,6 +33,7 @@ html {
 }
 
 body {
+  padding-top: 90px;  /* MESMO valor do header */
   font-family: Arial, sans-serif;
   line-height: 1.6;
   color: var(--text);
@@ -64,9 +65,13 @@ section { scroll-margin-top: 110px; }
 ========================= */
 header {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 20px 0;
+  height: 90px;                /* ALTURA FIXA */
+  padding: 0;                  /* remove padding vertical */
+  display: flex;
+  align-items: center;         /* centraliza conteúdo vertical */
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   z-index: 1000;
   transition: 0.25s ease;
@@ -178,7 +183,7 @@ header.active{
    - Mobile ajusta tamanho e empilha botões
 ========================= */
 .hero {
-  margin-top: 90px; /* mesma altura do header */
+  margin-top: 0;
   background:
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
     url("images/hero-bg.png");
@@ -936,6 +941,253 @@ footer {
   }
 
   #modalOrcamento .btn-block{
+    width: 100%;
+  }
+}
+
+/* Botão flutuante no estilo do btn-secondary */
+.floating-cta{
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2000;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 600px){
+  .floating-cta{
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+/* Botão flutuante padrão (letra preta) */
+.floating-cta{
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2000;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  color: #000;
+}
+
+/* Quando estiver sobre HERO ou FOOTER */
+.floating-cta.is-white{
+  color: #fff !important;
+}
+
+/* =====================================================
+   PROMOÇÕES: contador + destaque "Mais vendido" + brilho preço
+===================================================== */
+
+/* Contador */
+.promo-countdown{
+  margin: 18px auto 30px auto;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+/* =====================================================
+   PROMOÇÃO TERMINA EM - PRETO PISCANDO
+===================================================== */
+
+.promo-countdown__label{
+  font-size: 22px;          /* maior */
+  font-weight: 900;
+  color: #000;              /* PRETO */
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  
+}
+
+
+
+/* Destaque do card "Mais vendido" */
+.promo-card.featured{
+  transform: translateY(-6px);
+  border: 3px solid #25D366;
+  box-shadow: 0 18px 55px rgba(0,0,0,0.30);
+  position: relative;
+}
+
+/* Faixa "MAIS VENDIDO" */
+.promo-ribbon{
+  position: absolute;
+  top: 14px;
+  right: -44px;
+  background: #25D366;
+  color: #0b1a12;
+  font-weight: 900;
+  font-size: 12px;
+  padding: 7px 54px;
+  transform: rotate(45deg);
+  letter-spacing: 0.6px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.20);
+}
+
+/* Brilho no preço (efeito glow) */
+.promocoes .preco strong{
+  position: relative;
+  animation: priceGlow 1.6s ease-in-out infinite;
+  text-shadow: 0 0 0 rgba(37,211,102,0);
+}
+
+@keyframes priceGlow{
+  0%, 100%{
+    text-shadow:
+      0 0 0 rgba(37,211,102,0),
+      0 0 0 rgba(37,211,102,0);
+  }
+  50%{
+    text-shadow:
+      0 0 14px rgba(37,211,102,0.55),
+      0 0 28px rgba(37,211,102,0.35);
+  }
+}
+
+/* Mobile: faixa e contador mais compactos */
+@media (max-width: 600px){
+  .cd-box{ min-width: 78px; }
+  .promo-ribbon{ right: -54px; }
+}
+
+/* =====================================================
+   CONTADOR PROMOÇÕES - TEXTO ESCURO COM GLOW VERDE
+===================================================== */
+
+.promo-countdown{
+  margin: 18px auto 30px auto;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.promo-countdown__label{
+  font-weight: 700;
+  color: #25D366;
+  text-shadow: 0 0 10px rgba(37,211,102,0.5);
+}
+
+.promo-countdown__grid{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cd-box{
+  min-width: 95px;
+  padding: 14px 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* NÚMEROS COM GLOW */
+.cd-box strong{
+  display: block;
+  font-size: 26px;
+  font-weight: 800;
+  color: #0a1929;
+
+  animation: counterGlow 1.6s ease-in-out infinite;
+}
+
+@keyframes counterGlow{
+  0%,100%{
+    text-shadow:
+      0 0 0 rgba(37,211,102,0),
+      0 0 0 rgba(37,211,102,0);
+  }
+  50%{
+    text-shadow:
+      0 0 10px rgba(37,211,102,0.6),
+      0 0 20px rgba(37,211,102,0.4);
+  }
+}
+
+/* Texto pequeno */
+.cd-box small{
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #555;
+}
+
+/* =====================================================
+   BANNER LGPD (Cookies)
+===================================================== */
+.lgpd-banner{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3000;
+
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0,0,0,0.10);
+
+  padding: 14px 16px;
+  display: none; /* JS controla */
+}
+
+.lgpd-banner.show{
+  display: block;
+}
+
+.lgpd-banner__content{
+  max-width: 1100px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.lgpd-banner__text{
+  margin: 0;
+  color: #1e2b3c;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.lgpd-banner__link{
+  color: #1e2b3c;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.lgpd-banner__actions{
+  display: flex;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.lgpd-btn{
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Mobile: empilha */
+@media (max-width: 700px){
+  .lgpd-banner__content{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .lgpd-banner__actions{
+    justify-content: stretch;
+  }
+  .lgpd-btn{
     width: 100%;
   }
 }

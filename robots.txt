@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sossecurity.com.br/sitemap.xml
