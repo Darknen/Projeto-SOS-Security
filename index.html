@@ -366,10 +366,254 @@
     </div>
   </footer>
 
-  <!-- WhatsApp flutuante -->
-  <a href="https://wa.me/5521976952138" target="_blank" class="floating-whatsapp" aria-label="Abrir WhatsApp">
-    💬
-  </a>
+  <!-- WhatsApp flutuante Premium-->
+  <a href="#" class="floating-whatsapp premium" id="abrirOrcamento" aria-label="Abrir formulário de orçamento">
+  <span class="wa-ico">🟢</span>
+  <span class="wa-text">
+    <strong>Orçamento</strong>
+    <small>retorno em até 24h</small>
+  </span>
+</a>
+
+ <!-- =====================================================
+       MODAL — ORÇAMENTO TÉCNICO (LAYOUT EM CARDS, CLEAN)
+       - Tela única
+       - Dropdown em todos os campos com opções
+       - Sistemas: dropdown múltiplo (checkbox dentro)
+       - CFTV: quantidade de câmeras (opcional)
+       - Ao enviar: abre WhatsApp com a mensagem pronta
+  ====================================================== -->
+  <div class="modal" id="modalOrcamento" aria-hidden="true">
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="orcTitle">
+
+      <!-- Botão fechar -->
+      <button class="modal__close" id="fecharModal" type="button" aria-label="Fechar modal">✕</button>
+
+      <!-- Cabeçalho do modal (clean total) -->
+      <div class="modal__header">
+        <h3 id="orcTitle">Solicite seu orçamento</h3>
+        <p>Preencha abaixo. Ao enviar, o WhatsApp abrirá com a mensagem pronta.</p>
+      </div>
+
+      <form class="modal__form" id="formOrcamentoModal">
+        <!-- CARD 1: Dados do cliente -->
+        <section class="card">
+          <div class="card__title">📌 Dados do cliente</div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="nome">Nome completo *</label>
+              <input id="nome" name="nome" type="text" placeholder="Seu nome" required>
+            </div>
+
+            <div class="field">
+              <label for="telefone">Telefone / WhatsApp *</label>
+              <input id="telefone" name="telefone" type="tel" placeholder="(DDD) 9xxxx-xxxx" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="email">E-mail (opcional)</label>
+              <input id="email" name="email" type="email" placeholder="seuemail@email.com">
+            </div>
+
+            <div class="field">
+              <label for="contatoPref">Como prefere ser contactado? *</label>
+              <select id="contatoPref" name="contatoPref" required>
+                <option value="">Selecione</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Ligação">Ligação</option>
+                <option value="E-mail">E-mail</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- CARD 2: Tipo de imóvel -->
+        <section class="card">
+          <div class="card__title">🏢 Tipo de imóvel</div>
+          <div class="field">
+            <label for="imovel">Selecione *</label>
+            <select id="imovel" name="imovel" required>
+              <option value="">Selecione</option>
+              <option value="Residência">Residência</option>
+              <option value="Condomínio">Condomínio</option>
+              <option value="Empresa">Empresa</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- CARD 3: Endereço completo (obrigatório) -->
+        <section class="card">
+          <div class="card__title">📍 Endereço do serviço</div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="rua">Rua / Avenida *</label>
+              <input id="rua" name="rua" type="text" required>
+            </div>
+
+            <div class="field">
+              <label for="numero">Número *</label>
+              <input id="numero" name="numero" type="text" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="complemento">Complemento *</label>
+              <input id="complemento" name="complemento" type="text" placeholder="Apto / Bloco / Casa" required>
+            </div>
+
+            <div class="field">
+              <label for="bairro">Bairro *</label>
+              <input id="bairro" name="bairro" type="text" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="cidade">Cidade *</label>
+              <input id="cidade" name="cidade" type="text" required>
+            </div>
+
+            <div class="field">
+              <label for="estado">Estado *</label>
+              <select id="estado" name="estado" required>
+                <option value="">Selecione</option>
+                <option value="RJ">RJ</option>
+                <option value="SP">SP</option>
+                <option value="MG">MG</option>
+                <option value="ES">ES</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- CARD 4: Sistemas (dropdown múltiplo) -->
+        <section class="card">
+          <div class="card__title">🛠 Selecione seu Sistema</div>
+
+          <div class="field">
+            <label>Sistemas * (pode marcar mais de um)</label>
+
+            <!-- Trigger com visual de dropdown -->
+            <button type="button" class="multi-trigger" id="sistemasTrigger" aria-expanded="false">
+              <span id="sistemasLabel">Selecione os sistemas</span>
+              <span class="chev" aria-hidden="true">▾</span>
+            </button>
+
+            <!-- Painel com checkboxes -->
+            <div class="multi-panel" id="sistemasPanel">
+              <label class="multi-option">
+                <input type="checkbox" class="sys-check" value="CFTV / Câmeras" data-key="cftv">
+                <span>CFTV / Câmeras</span>
+              </label>
+              <label class="multi-option">
+                <input type="checkbox" class="sys-check" value="Controle de Acesso">
+                <span>Controle de Acesso</span>
+              </label>
+              <label class="multi-option">
+                <input type="checkbox" class="sys-check" value="Cerca Elétrica">
+                <span>Cerca Elétrica</span>
+              </label>
+              <label class="multi-option">
+                <input type="checkbox" class="sys-check" value="Portão Automático">
+                <span>Portão Automático</span>
+              </label>
+              <label class="multi-option">
+                <input type="checkbox" class="sys-check" value="Sistema de Incêndio">
+                <span>Sistema de Incêndio</span>
+              </label>
+              <label class="multi-option">
+                <input type="checkbox" class="sys-check" value="Cabeamento Estruturado">
+                <span>Cabeamento Estruturado</span>
+              </label>
+              <label class="multi-option">
+                <input type="checkbox" class="sys-check" value="Interfone / PABX">
+                <span>Interfone / PABX</span>
+              </label>
+              <label class="multi-option">
+                <input type="checkbox" class="sys-check" value="Automação">
+                <span>Automação</span>
+              </label>
+            </div>
+
+            <!-- Hidden required para validação -->
+            <input type="hidden" id="sistemasHidden" name="sistemasHidden" required>
+
+            <small class="hint">Clique no campo acima para abrir e selecionar.</small>
+          </div>
+
+          <!-- CFTV: quantidade de câmeras (opcional) -->
+          <div class="field" id="cftvBlock" style="display:none;">
+            <label for="qtdCameras">Quantidade de câmeras (opcional)</label>
+            <select id="qtdCameras" name="qtdCameras">
+              <option value="">Selecione</option>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="8">8</option>
+              <option value="16">16</option>
+              <option value="32">32</option>
+              <option value="Outro">Outra quantidade</option>
+            </select>
+
+            <div class="field" id="qtdOutroBlock" style="display:none; margin-top:10px;">
+              <label for="qtdCamerasOutro">Quantidade exata</label>
+              <input id="qtdCamerasOutro" name="qtdCamerasOutro" type="number" min="1" placeholder="Ex: 12">
+            </div>
+          </div>
+        </section>
+
+        <!-- CARD 5: Atendimento -->
+        <section class="card">
+          <div class="card__title">⚙ Detalhes do atendimento</div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="tipoAtendimento">Tipo de atendimento *</label>
+              <select id="tipoAtendimento" name="tipoAtendimento" required>
+                <option value="">Selecione</option>
+                <option value="Instalação nova">Instalação nova</option>
+                <option value="Reparo">Reparo</option>
+                <option value="Manutenção">Manutenção</option>
+                <option value="Outros">Outros</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="urgencia">Urgência *</label>
+              <select id="urgencia" name="urgencia" required>
+                <option value="">Selecione</option>
+                <option value="Emergencial (hoje)">Emergencial (hoje)</option>
+                <option value="Em até 24h">Em até 24h</option>
+                <option value="Esta semana">Esta semana</option>
+                <option value="Sem urgência">Sem urgência</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- CARD 6: Descrição -->
+        <section class="card">
+          <div class="card__title">📝 Descrição da solicitação</div>
+
+          <div class="field">
+            <label for="descricao">Explique o que está acontecendo *</label>
+            <textarea id="descricao" name="descricao" rows="5"
+              placeholder="Ex: câmera sem imagem, DVR travando, instalação completa..." required></textarea>
+          </div>
+        </section>
+
+        <!-- CTA final -->
+      <div class="modal__footer">
+        <!-- <small class="hint">Retorno do atendimento em até 24h.</small> -->
+        <button type="submit" class="btn-primary btn-block">
+         Enviar Orçamento →
+         </button>
+</div>
 
   <script src="script.js"></script>
 </body>
